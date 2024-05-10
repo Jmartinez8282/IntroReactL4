@@ -1,12 +1,22 @@
 import { useState } from "react";
 
-
-
+//Typescrip has a feature called interface
+//using an interface we can define the shape of our objects
+//{items: [], heading :string}
+// interface ListProps {
+//   heading: string
+//   cars: string []
+// }
+interface ListProps {
+  items: string []
+  heading: string
+  onSelectedItem:(item:string) => void
+}
 
   
 
-const ListGroup = () => {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
+const ListGroup = ({items,heading,onSelectedItem}:ListProps) => {
+  
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -49,7 +59,7 @@ const ListGroup = () => {
     //JSX we must have one parent element. Example div, Fragment or <></>
 
     <>
-      <h1>List</h1>
+      <h1>{heading}</h1>
       {getMessage()}
       <ul className="list-group">
         {items.map((item, index) => (
@@ -60,7 +70,9 @@ const ListGroup = () => {
                 : "list-group-item"
             }
             key={index}
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => {setSelectedIndex(index)
+              onSelectedItem(item)
+            }}
           >
             {item}
           </li>
